@@ -15,11 +15,14 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
 	const [page, setPage] = useState(0);
 	const [data, setData] = useState<any[]>([]);
 	const [loading, setLoading] = useState(false);
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		!loading && getData();
@@ -113,7 +116,16 @@ const Home = () => {
 							data?.map((item) => {
 								const { author, created_at, title, url, objectID } = item;
 								return (
-									<TableRow key={objectID} hover>
+									<TableRow
+										key={objectID}
+										onClick={() => {
+											navigate(`/json`, {
+												state: {
+													item,
+												},
+											});
+										}}
+									>
 										<TableCell
 											style={{
 												backgroundColor: "#FFFECB",
@@ -140,7 +152,6 @@ const Home = () => {
 												backgroundColor: "#FFFECB",
 											}}
 										>
-											{" "}
 											{<a href={url}>{url}</a> || "-"}
 										</TableCell>
 									</TableRow>
