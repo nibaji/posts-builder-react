@@ -1,12 +1,15 @@
 /** @format */
 
 import {
+	CircularProgress,
 	Container,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
+	TableFooter,
 	TableHead,
+	TablePagination,
 	TableRow,
 	Typography,
 } from "@mui/material";
@@ -14,24 +17,32 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-	const [page, setPage] = useState(1);
+	const [page, setPage] = useState(0);
 	const [data, setData] = useState<any[]>([]);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		setLoading(true);
-		getData();
+		!loading && getData();
 	}, [page]);
 
 	function getData() {
+		setLoading(true);
 		axios
 			.get(
 				`https://hn.algolia.com/api/v1/search_by_date?query=story&page=${page}`
 			)
-			.then((res) => setData(res.data.hits))
+			.then((res) => setData(Array.from(new Set(res.data.hits))))
 			.catch((err) => console.log(err))
 			.finally(() => setLoading(false));
 	}
+
+	const handleChangePage = (
+		event: React.MouseEvent<HTMLButtonElement> | null,
+		newPage: number
+	) => {
+		setData([]);
+		setPage(newPage);
+	};
 
 	return (
 		<Container
@@ -42,32 +53,122 @@ const Home = () => {
 				flexDirection: "column",
 			}}
 		>
-			<Typography variant="h3" marginBottom={10}>
+			<Typography variant="h4" marginY={3}>
 				News
 			</Typography>
-			<TableContainer>
-				<Table>
+			<TableContainer
+				style={{
+					borderRadius: "20px",
+					borderWidth: "10px",
+					borderColor: "yellow",
+				}}
+			>
+				<Table stickyHeader={true}>
 					<TableHead>
 						<TableRow>
-							<TableCell>Title</TableCell>
-							<TableCell>Author</TableCell>
-							<TableCell>Date</TableCell>
-							<TableCell>URL</TableCell>
+							<TableCell
+								style={{
+									backgroundColor: "#8B8A25",
+									color: "white",
+								}}
+							>
+								Title
+							</TableCell>
+							<TableCell
+								style={{
+									backgroundColor: "#8B8A25",
+									color: "white",
+								}}
+							>
+								Author
+							</TableCell>
+							<TableCell
+								style={{
+									backgroundColor: "#8B8A25",
+									color: "white",
+								}}
+							>
+								Date
+							</TableCell>
+							<TableCell
+								style={{
+									backgroundColor: "#8B8A25",
+									color: "white",
+								}}
+							>
+								URL
+							</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{data.map((item) => {
-							const { author, created_at, title, url } = item;
-							return (
-								<TableRow>
-									<TableCell>{title || "-"}</TableCell>
-									<TableCell>{author || "-"}</TableCell>
-									<TableCell>{created_at || "-"}</TableCell>
-									<TableCell>{url || "-"}</TableCell>
-								</TableRow>
-							);
-						})}
+						{loading ? (
+							<CircularProgress
+								style={{
+									marginLeft: window.innerWidth / 2.5,
+									marginTop: 20,
+									marginBottom: 20,
+								}}
+							/>
+						) : (
+							data?.map((item) => {
+								const { author, created_at, title, url, objectID } = item;
+								return (
+									<TableRow key={objectID} hover>
+										<TableCell
+											style={{
+												backgroundColor: "#FFFECB",
+											}}
+										>
+											{title || "-"}
+										</TableCell>
+										<TableCell
+											style={{
+												backgroundColor: "#FFFECB",
+											}}
+										>
+											{author || "-"}
+										</TableCell>
+										<TableCell
+											style={{
+												backgroundColor: "#FFFECB",
+											}}
+										>
+											{created_at || "-"}
+										</TableCell>
+										<TableCell
+											style={{
+												backgroundColor: "#FFFECB",
+											}}
+										>
+											{" "}
+											{<a href={url}>{url}</a> || "-"}
+										</TableCell>
+									</TableRow>
+								);
+							})
+						)}
 					</TableBody>
+					<TableFooter>
+						<TableRow>
+							<TablePagination
+								rowsPerPageOptions={[20]}
+								count={50 * 20}
+								rowsPerPage={20}
+								page={page}
+								onPageChange={handleChangePage}
+								showFirstButton
+								showLastButton
+								style={{
+									backgroundColor: "#8B8A25",
+									borderRadius: "10px",
+									color: "white",
+									marginTop: 20,
+									right: 20,
+									position: "absolute",
+								}}
+							/>
+						</TableRow>
+					</TableFooter>
 				</Table>
 			</TableContainer>
 		</Container>
