@@ -1,8 +1,9 @@
 /** @format */
 
-import { Box, Button, Container, Typography } from "@mui/material";
-import React, { FC } from "react";
+import { Button, Container } from "@mui/material";
+import { FC } from "react";
 import { useLocation } from "react-router-dom";
+import { styles } from "../styles/screen";
 
 const Details: FC<any> = () => {
 	const location: any = useLocation();
@@ -15,10 +16,7 @@ const Details: FC<any> = () => {
 				onClick={() => {
 					window.history.back();
 				}}
-				style={{
-					marginTop: "1rem",
-					marginBottom: "1rem",
-				}}
+				style={styles.backButton}
 			>
 				{"< Back"}
 			</Button>

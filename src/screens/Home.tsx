@@ -17,6 +17,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { styles } from "../styles/screen";
+
 const Home = () => {
 	const [page, setPage] = useState(0);
 	const [data, setData] = useState<any[]>([]);
@@ -27,6 +29,7 @@ const Home = () => {
 
 	useEffect(() => {
 		!loading && getData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
 
 	function getData() {
@@ -49,79 +52,25 @@ const Home = () => {
 	};
 
 	return (
-		<Container
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-				flexDirection: "column",
-			}}
-		>
+		<Container style={styles.container}>
 			<Typography variant="h4" marginY={3}>
 				News
 			</Typography>
-			<TableContainer
-				style={{
-					borderRadius: "20px",
-					borderWidth: "10px",
-					borderColor: "yellow",
-				}}
-			>
+			<TableContainer style={styles.tableContainer}>
 				<Table stickyHeader={true}>
 					<TableHead>
 						<TableRow>
-							<TableCell
-								style={{
-									backgroundColor: "#8B8A25",
-									color: "white",
-								}}
-							>
-								Title
-							</TableCell>
-							<TableCell
-								style={{
-									backgroundColor: "#8B8A25",
-									color: "white",
-								}}
-							>
-								Author
-							</TableCell>
-							<TableCell
-								style={{
-									backgroundColor: "#8B8A25",
-									color: "white",
-								}}
-							>
-								Date
-							</TableCell>
-							<TableCell
-								style={{
-									backgroundColor: "#8B8A25",
-									color: "white",
-								}}
-							>
-								URL
-							</TableCell>
+							<TableCell style={styles.tableHeaderCell}>Title</TableCell>
+							<TableCell style={styles.tableHeaderCell}>Author</TableCell>
+							<TableCell style={styles.tableHeaderCell}>Date</TableCell>
+							<TableCell style={styles.tableHeaderCell}>URL</TableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
 						{loading ? (
-							<CircularProgress
-								style={{
-									marginLeft: window.innerWidth / 2.5,
-									marginTop: 20,
-									marginBottom: 20,
-								}}
-							/>
+							<CircularProgress style={styles.circularProgress} />
 						) : error ? (
-							<Typography
-								style={{
-									left: "42%",
-									right: "42%",
-									margin: 40,
-									position: "absolute",
-								}}
-							>
+							<Typography style={styles.error}>
 								Something went wrong. Please try again!
 							</Typography>
 						) : (
@@ -138,32 +87,16 @@ const Home = () => {
 											});
 										}}
 									>
-										<TableCell
-											style={{
-												backgroundColor: "#FFFECB",
-											}}
-										>
+										<TableCell style={styles.tableBodyCell}>
 											{title || "-"}
 										</TableCell>
-										<TableCell
-											style={{
-												backgroundColor: "#FFFECB",
-											}}
-										>
+										<TableCell style={styles.tableBodyCell}>
 											{author || "-"}
 										</TableCell>
-										<TableCell
-											style={{
-												backgroundColor: "#FFFECB",
-											}}
-										>
+										<TableCell style={styles.tableBodyCell}>
 											{created_at || "-"}
 										</TableCell>
-										<TableCell
-											style={{
-												backgroundColor: "#FFFECB",
-											}}
-										>
+										<TableCell style={styles.tableBodyCell}>
 											{<a href={url}>{url}</a> || "-"}
 										</TableCell>
 									</TableRow>
@@ -182,10 +115,7 @@ const Home = () => {
 									onPageChange={handleChangePage}
 									showFirstButton
 									showLastButton
-									style={{
-										backgroundColor: "#8B8A25",
-										color: "white",
-									}}
+									style={styles.tablePagination}
 								/>
 							)}
 						</TableRow>
