@@ -116,9 +116,10 @@ const Home = () => {
 						) : error ? (
 							<Typography
 								style={{
-									marginLeft: window.innerWidth / 4,
-									marginTop: 40,
-									marginBottom: 20,
+									left: "42%",
+									right: "42%",
+									margin: 40,
+									position: "absolute",
 								}}
 							>
 								Something went wrong. Please try again!
@@ -172,23 +173,21 @@ const Home = () => {
 					</TableBody>
 					<TableFooter>
 						<TableRow>
-							<TablePagination
-								rowsPerPageOptions={[20]}
-								count={50 * 20}
-								rowsPerPage={20}
-								page={page}
-								onPageChange={handleChangePage}
-								showFirstButton
-								showLastButton
-								style={{
-									backgroundColor: "#8B8A25",
-									borderRadius: "10px",
-									color: "white",
-									marginTop: 20,
-									right: 20,
-									position: "absolute",
-								}}
-							/>
+							{!error && !loading && (
+								<TablePagination
+									rowsPerPageOptions={[20]}
+									count={50 * 20}
+									rowsPerPage={20}
+									page={page}
+									onPageChange={handleChangePage}
+									showFirstButton
+									showLastButton
+									style={{
+										backgroundColor: "#8B8A25",
+										color: "white",
+									}}
+								/>
+							)}
 						</TableRow>
 					</TableFooter>
 				</Table>
