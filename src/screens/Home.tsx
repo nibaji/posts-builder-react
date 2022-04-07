@@ -21,6 +21,7 @@ const Home = () => {
 	const [page, setPage] = useState(0);
 	const [data, setData] = useState<any[]>([]);
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -35,7 +36,7 @@ const Home = () => {
 				`https://hn.algolia.com/api/v1/search_by_date?query=story&page=${page}`
 			)
 			.then((res) => setData(Array.from(new Set(res.data.hits))))
-			.catch((err) => console.log(err))
+			.catch((err) => setError(true))
 			.finally(() => setLoading(false));
 	}
 
@@ -112,6 +113,16 @@ const Home = () => {
 									marginBottom: 20,
 								}}
 							/>
+						) : error ? (
+							<Typography
+								style={{
+									marginLeft: window.innerWidth / 4,
+									marginTop: 40,
+									marginBottom: 20,
+								}}
+							>
+								Something went wrong. Please try again!
+							</Typography>
 						) : (
 							data?.map((item) => {
 								const { author, created_at, title, url, objectID } = item;
