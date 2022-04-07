@@ -18,10 +18,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { styles } from "../styles/screen";
+import { newsResponse } from "../types/response";
 
 const Home = () => {
 	const [page, setPage] = useState(0);
-	const [data, setData] = useState<any[]>([]);
+	const [data, setData] = useState<newsResponse[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 
