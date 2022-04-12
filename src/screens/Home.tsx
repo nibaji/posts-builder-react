@@ -9,7 +9,6 @@ import {
 	TableContainer,
 	TableFooter,
 	TableHead,
-	TablePagination,
 	TableRow,
 	Typography,
 } from "@mui/material";
@@ -29,6 +28,18 @@ const Home = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		// getData();
+		const inter = setInterval(() => {
+			!loading &&
+				setPage((prev) => {
+					return ++prev;
+				});
+		}, 10000);
+		return () => clearInterval(inter);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
 		!loading && getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
@@ -39,18 +50,10 @@ const Home = () => {
 			.get(
 				`https://hn.algolia.com/api/v1/search_by_date?query=story&page=${page}`
 			)
-			.then((res) => setData(Array.from(new Set(res.data.hits))))
+			.then((res) => setData(Array.from(new Set([...data, ...res.data.hits]))))
 			.catch((err) => setError(true))
 			.finally(() => setLoading(false));
 	}
-
-	const handleChangePage = (
-		event: React.MouseEvent<HTMLButtonElement> | null,
-		newPage: number
-	) => {
-		setData([]);
-		setPage(newPage);
-	};
 
 	return (
 		<Container style={styles.container}>
@@ -68,9 +71,7 @@ const Home = () => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{loading ? (
-							<CircularProgress style={styles.circularProgress} />
-						) : error ? (
+						{error ? (
 							<Typography style={styles.error}>
 								Something went wrong. Please try again!
 							</Typography>
@@ -106,20 +107,9 @@ const Home = () => {
 						)}
 					</TableBody>
 					<TableFooter>
-						<TableRow>
-							{!error && !loading && (
-								<TablePagination
-									rowsPerPageOptions={[20]}
-									count={50 * 20}
-									rowsPerPage={20}
-									page={page}
-									onPageChange={handleChangePage}
-									showFirstButton
-									showLastButton
-									style={styles.tablePagination}
-								/>
-							)}
-						</TableRow>
+						<TableCell colSpan={4}>
+							{loading && <CircularProgress style={styles.circularProgress} />}
+						</TableCell>
 					</TableFooter>
 				</Table>
 			</TableContainer>
