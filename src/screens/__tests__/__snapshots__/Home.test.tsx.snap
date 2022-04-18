@@ -59,33 +59,34 @@ Object {
             </thead>
             <tbody
               class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
-            >
-              <span
-                class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
-                role="progressbar"
-                style="width: 40px; height: 40px; margin-left: 409.6px; margin-top: 20px; margin-bottom: 20px;"
-              >
-                <svg
-                  class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
-                  viewBox="22 22 44 44"
-                >
-                  <circle
-                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
-                    cx="44"
-                    cy="44"
-                    fill="none"
-                    r="20.2"
-                    stroke-width="3.6"
-                  />
-                </svg>
-              </span>
-            </tbody>
+            />
             <tfoot
               class="MuiTableFooter-root css-9cgc89-MuiTableFooter-root"
             >
-              <tr
-                class="MuiTableRow-root MuiTableRow-footer css-1q1u3t4-MuiTableRow-root"
-              />
+              <td
+                class="MuiTableCell-root MuiTableCell-footer MuiTableCell-sizeMedium css-nfmglb-MuiTableCell-root"
+                colspan="4"
+              >
+                <span
+                  class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+                  role="progressbar"
+                  style="width: 40px; height: 40px; margin-left: 409.6px; margin-top: 20px; margin-bottom: 20px;"
+                >
+                  <svg
+                    class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                      cx="44"
+                      cy="44"
+                      fill="none"
+                      r="20.2"
+                      stroke-width="3.6"
+                    />
+                  </svg>
+                </span>
+              </td>
             </tfoot>
           </table>
         </div>
@@ -147,33 +148,34 @@ Object {
           </thead>
           <tbody
             class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
-          >
-            <span
-              class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
-              role="progressbar"
-              style="width: 40px; height: 40px; margin-left: 409.6px; margin-top: 20px; margin-bottom: 20px;"
-            >
-              <svg
-                class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
-                viewBox="22 22 44 44"
-              >
-                <circle
-                  class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
-                  cx="44"
-                  cy="44"
-                  fill="none"
-                  r="20.2"
-                  stroke-width="3.6"
-                />
-              </svg>
-            </span>
-          </tbody>
+          />
           <tfoot
             class="MuiTableFooter-root css-9cgc89-MuiTableFooter-root"
           >
-            <tr
-              class="MuiTableRow-root MuiTableRow-footer css-1q1u3t4-MuiTableRow-root"
-            />
+            <td
+              class="MuiTableCell-root MuiTableCell-footer MuiTableCell-sizeMedium css-nfmglb-MuiTableCell-root"
+              colspan="4"
+            >
+              <span
+                class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+                role="progressbar"
+                style="width: 40px; height: 40px; margin-left: 409.6px; margin-top: 20px; margin-bottom: 20px;"
+              >
+                <svg
+                  class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                    cx="44"
+                    cy="44"
+                    fill="none"
+                    r="20.2"
+                    stroke-width="3.6"
+                  />
+                </svg>
+              </span>
+            </td>
           </tfoot>
         </table>
       </div>
