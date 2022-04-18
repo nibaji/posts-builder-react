@@ -28,7 +28,12 @@ const Home = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// getData();
+		const theScroll = window.addEventListener("scroll", handleScroll);
+		return () => theScroll;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
 		const inter = setInterval(() => {
 			!loading &&
 				setPage((prev) => {
@@ -43,6 +48,20 @@ const Home = () => {
 		!loading && getData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
+
+	function handleScroll() {
+		if (
+			// window.innerHeight + document.documentElement.scrollTop !==
+			// document.documentElement.offsetHeight
+			window.scrollY + window.innerHeight >=
+			document.documentElement.scrollHeight
+		) {
+			!loading &&
+				setPage((prev) => {
+					return prev + 1;
+				});
+		}
+	}
 
 	function getData() {
 		setLoading(true);
