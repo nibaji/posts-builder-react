@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { styles } from "../styles/screen";
 import { newsResponse } from "../types/response";
 
-const Home = () => {
+const Home = (props: any) => {
 	const [page, setPage] = useState(0);
 	const [data, setData] = useState<newsResponse[]>([]);
 	const [loading, setLoading] = useState(false);
@@ -81,7 +81,7 @@ const Home = () => {
 			</Typography>
 			<TableContainer style={styles.tableContainer}>
 				<Table stickyHeader={true}>
-					<TableHead>
+					<TableHead data-testid={"tableHead"}>
 						<TableRow>
 							<TableCell style={styles.tableHeaderCell}>Title</TableCell>
 							<TableCell style={styles.tableHeaderCell}>Author</TableCell>
@@ -95,10 +95,11 @@ const Home = () => {
 								Something went wrong. Please try again!
 							</Typography>
 						) : (
-							data?.map((item) => {
+							data?.map((item, i) => {
 								const { author, created_at, title, url, objectID } = item;
 								return (
 									<TableRow
+										data-testid={`tableRow-${i}`}
 										key={objectID}
 										onClick={() => {
 											navigate(`/json`, {

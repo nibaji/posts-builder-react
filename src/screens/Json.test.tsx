@@ -35,12 +35,7 @@ describe("Details", () => {
 	test("contains back button", () => {
 		render(<Details />);
 		const linkElement = screen.getByText(/back/i);
+		linkElement.click();
 		expect(linkElement).toBeInTheDocument();
-	});
-
-	test("has children", () => {
-		const { container } = render(<Details />);
-		const { children } = container;
-		expect(children.length).toBeGreaterThan(0);
 	});
 });

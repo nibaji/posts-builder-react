@@ -23,6 +23,7 @@ Object {
           >
             <thead
               class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+              data-testid="tableHead"
             >
               <tr
                 class="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"
@@ -112,6 +113,7 @@ Object {
         >
           <thead
             class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+            data-testid="tableHead"
           >
             <tr
               class="MuiTableRow-root MuiTableRow-head css-1q1u3t4-MuiTableRow-root"

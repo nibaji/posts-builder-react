@@ -1,15 +1,18 @@
 /** @format */
 
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Home from "./Home";
 
 jest.mock("react-router-dom", () => {
 	return {
-		useNavigate: jest.fn(),
+		// ...(jest.requireActual("react-router-dom") as any),
+		useNavigate: () => jest.fn(),
 	};
 });
 
 describe("Home", () => {
+	jest.setTimeout(10000);
+
 	test("renders without crashing", () => {
 		render(<Home />);
 	});
@@ -25,9 +28,18 @@ describe("Home", () => {
 		expect(linkElement).toBeInTheDocument();
 	});
 
-	test("has children", () => {
-		const { container } = render(<Home />);
-		const { children } = container;
-		expect(children.length).toBeGreaterThan(0);
+	test("has tableHead", async () => {
+		render(<Home />);
+		await new Promise((r) => setTimeout(r, 2000));
+		const linkElement = screen.getByTestId("tableHead");
+		expect(linkElement).toBeInTheDocument();
+	});
+
+	test("has tableElement", async () => {
+		render(<Home />);
+		await new Promise((r) => setTimeout(r, 2000));
+		const linkElement = screen.getByTestId("tableRow-1");
+		fireEvent.click(linkElement);
+		expect(linkElement).toBeInTheDocument();
 	});
 });
