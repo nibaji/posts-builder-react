@@ -21,6 +21,9 @@
     "typescript": "^4.6.3",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.3.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -31,7 +34,14 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "plugins": [
+      "react-hooks"
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    }
   },
   "browserslist": {
     "production": [
