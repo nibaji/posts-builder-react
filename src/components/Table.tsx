@@ -1,6 +1,6 @@
 import { CircularProgress, Link, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow, Typography } from "@mui/material";
 import axios from "axios";
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { style } from "../styles/components";
@@ -15,34 +15,57 @@ const TheTable : FC = ()=>{
 
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        fetchdata()
-        window.addEventListener("scroll", handleScroll)
-        const interval = setInterval(()=>{
-          !loading &&  setPage(p=> ++p)},10000
-        )
-        return ()=> clearInterval(interval)
-    },[])
+   const fetchdata = useCallback(({ pageNumber = 0 }) => {
+     setLoading(true);
+     axios
+       .get(
+         `https://hn.algolia.com/api/v1/search_by_date?tags=story&page=${pageNumber}`
+       )
+       .then((res) =>
+         setPosts((prev) => Array.from(new Set([...prev, ...res.data.hits])))
+       )
+       .catch(() => setError(true))
+       .finally(() => setLoading(false));
+   }, []);
 
-    useEffect(()=>{
-        !loading && fetchdata()
-    },[page])
+   const handleScroll = useCallback(() => {
+     if (
+       window.scrollY + window.innerHeight >=
+         document.documentElement.scrollHeight &&
+       !loading
+     ) {
+       setPage((p: number) => ++p);
+     }
+   }, [loading]);
 
-    const fetchdata = ()=>{
-        setLoading(true)
-        axios.get(`https://hn.algolia.com/api/v1/search_by_date?tags=story&page=${page}`)
-        .then(res=> setPosts(prev=> 
-            Array.from(new Set([...prev, ...res.data.hits]))
-            ))
-        .catch(()=>setError(true))
-        .finally(()=> setLoading(false))
-    }
+   useEffect(() => {
+     window.addEventListener("scroll", handleScroll);
 
-    const handleScroll =()=>{
-        if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight){
-          !loading &&  setPage((p:number)=> ++p)
-        }
-    }
+     return () => window.removeEventListener("scroll", handleScroll);
+   }, [handleScroll]);
+
+   useEffect(() => {
+     let interval: NodeJS.Timeout | null = null;
+
+     if (!loading && posts.length > 0) {
+       interval = setInterval(() => {
+         setPage((p: number) => ++p);
+       }, 10000);
+     }
+
+     return () => {
+       if (interval != null) clearInterval(interval);
+     };
+   }, [loading, posts.length]);
+
+   useEffect(() => {
+     if (page === 0) {
+       fetchdata({});
+       return;
+     }
+
+     fetchdata({ pageNumber: page });
+   }, [fetchdata, page]);
 
     return <>
     <TableContainer 
